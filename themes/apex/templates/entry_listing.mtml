@@ -2,7 +2,7 @@
 <mt:setVarBlock name="archive_type"><mt:archiveType></mt:setVarBlock>
 <mt:if name="archive_type" like="Category"><mt:var name="archive" value="category"><mt:else><mt:var name="archive" value="datebased"></mt:if>
 <mt:setVarBlock name="count"><mt:archiveCount></mt:setVarBlock>
-<mt:setVarBlock name="title"><__trans phrase="[_1] Archives" params="<mt:ArchiveTitle encode_html="1">"></mt:setVarBlock>
+<mt:setVarBlock name="title"><__trans phrase="[_1] Archives" params="<mt:ArchiveTitle>"></mt:setVarBlock>
 
 <!DOCTYPE html>
 <html lang="<mt:BlogLanguage>" itemscope itemtype="http://schema.org/Blog">
