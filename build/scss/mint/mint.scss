@@ -1,0 +1,303 @@
+/*
+name: Apex (Blue Mint)
+designer: Six Apart, Ltd.
+designer_url: http://www.sixapart.com/
+*/
+
+@import "compass/css3/images";
+
+body {
+  background: #4C4C56;
+  color: #F2F2FF;
+}
+
+.container {
+  background: #4C4C56;
+}
+
+a {
+  color: #00ccff;
+  &:hover {
+    color: #FF0090;
+  }
+}
+
+.header {
+  border-bottom: 1px solid #6E6E7D;
+  .header-content {
+    h1 {
+      a {
+        color: #fff;
+      }
+    }
+  }
+}
+
+.header-nav-list {
+  li {
+    &.header-nav__home {
+      a:hover .icon-home {
+        color: #FF0090;
+      }
+    }
+    .icon-home {
+      color: #00ccff;
+    }
+  }
+}
+
+.hentry {
+  .article-header {
+    &:after {
+      background: #6E6E7D;
+    }
+    h1.article__title {
+      a {
+        color: #F2F2FF;
+      }
+    }
+    .article-meta-list {
+      background: #4C4C56;
+      li {
+        color: #9292A2;
+      }
+    }
+  }
+  .article__content,
+  .article__excerpt {
+    h2, h3 {
+      border-color: #6E6E7D;
+    }
+    blockquote {
+      border-color: #F2F2FF;
+    }
+    ins {
+      background-color: #565662;
+    }
+  }
+}
+
+.comments-content {
+  li {
+    border-color: #6E6E7D;
+    &:before {
+      background: #30A4BF;
+    }
+    a {
+      color: #F2F2FF;
+      &:hover {
+        color: #FF0090;
+      }
+    }
+    .comment__reply-link {
+      color: #f2f2ff;
+      background-color: #6E6E7D;
+      &:hover {
+        background-color: #FF0090;
+      }
+    }
+    time {
+      color: #9292A2;
+    }
+  }
+}
+
+.comment-form-container {
+  textarea,
+  input[type="text"],
+  input[type="email"],
+  input[type="url"] {
+    color: #f2f2ff;
+    border-color: #6E6E7D;
+    background-color: #565662;
+    &:focus {
+      border-color: #00ccff;
+    }
+  }
+  input[type="submit"],
+  input[type="button"] {
+    background-color: #6E6E7D;
+    &[name="post"] {
+      background-color: #30A4BF;
+    }
+    &:hover,
+    &:focus,
+    &:active {
+      background-color: #FF0090;
+    }
+  }
+  .form-item-captcha {
+    background: #565662;
+    @include background-image(linear-gradient(90deg, transparent 50%, transparent 50%), linear-gradient(135deg, rgba(#6e6e7d, 0.3) 25%, transparent 25%, transparent 50%, rgba(#6e6e7d, 0.3) 50%, rgba(#6e6e7d, 0.3) 75%, transparent 75%, transparent));
+    background-size: 100% 100%, 100px 100px;
+    input[type="text"] {
+      border-color: #6E6E7D;
+      background-color: #565662;
+      &:focus {
+        border-color: #00ccff;
+      }
+    }
+  }
+  .comment-form__allow-html-help {
+    color: #9292A2;
+  }
+}
+
+.article-content-container {
+  .trackback-url {
+    border-color: #6E6E7D;
+    background: #6E6E7D;
+  }
+  .trackback-url-inner {
+    background: #565662;
+  }
+  .trackbacks__list-item {
+    border-color: #6E6E7D;
+    .trackback__date,
+    .trackback__excerpt {
+      color: #9292A2;
+    }
+  }
+}
+
+.article-tags {
+  border-color: #6E6E7D;
+  .article-tags__title {
+    color: #f2f2ff;
+    span {
+      background: #4C4C56;
+    }
+  }
+}
+
+.article-navigation {
+  li {
+    a {
+      background: #6E6E7D;
+      color: #fff;
+      &:hover,
+      &:active {
+        background: #ff0090;
+      }
+    }
+  }
+}
+
+.loading {
+  background: #F2F2FF;
+}
+
+.footer,
+.widgets-bottom {
+  background: transparent;
+  border: 0 none transparent;
+}
+
+.widget {
+  color: #F2F2FF;
+  a {
+    color: #F2F2FF;
+    &:hover,
+    &:active {
+      color: #FF0090;
+    }
+  }
+}
+
+.widget__title {
+  border-color: #6E6E7D;
+}
+
+.widget-search {
+  .widget-search__input {
+    border-color: #4C4C56;
+    &:focus {
+      border-color: #FF0090;
+    }
+  }
+  .widget-search__button {
+    background-color: #30A4BF;
+    &:hover,
+    &:focus {
+      background-color: #FF0090;
+    }
+    &.button-disabled {
+      background-color: #6E6E7D;
+      &:hover,
+      &:focus {
+        background-color: #6E6E7D;
+      }
+    }
+  }
+}
+
+.no-result-found {
+  background: #6E6E7D;
+  border-color: #6E6E7D;
+}
+
+.no-search-description {
+  pre {
+    background: #565662;
+    border-color: #6E6E7D;
+  }
+}
+
+.widget-syndication {
+  a {
+    .icon-feed {
+      color: #30A4BF;
+    }
+    &:hover,
+    &:active {
+      color: #ff0090;
+      .icon-feed {
+        color: #FF0090;
+      }
+    }
+  }
+}
+
+.widget-archive-category,
+.widget-recent-entries,
+.widget-pages,
+.widget-archive-monthly {
+  .widget-list__item {
+    a {
+      background: #565662;
+      &:hover,
+      &:active {
+        color: inherit;
+        background: #FF0090;
+      }
+    }
+  }
+}
+
+.widget-tag-cloud {
+  .rank-1 a,
+  .rank-2 a,
+  .rank-3 a {
+    color: #00ccff;
+    &:hover,
+    &:active {
+      color: #FF0090;
+    }
+  }
+}
+
+.tags .main .widget-tag-cloud {
+  border-color: #6E6E7D;
+}
+
+.tag-search-description {
+  background: #565662;
+}
+
+@media screen and (max-width: 520px) {
+  .header-nav-list {
+    li {
+      border-top: 1px solid #6E6E7D;
+    }
+  }
+}

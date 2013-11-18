@@ -1,0 +1,294 @@
+/*
+name: Apex (Blue Print)
+designer: Six Apart, Ltd.
+designer_url: http://www.sixapart.com/
+*/
+
+@import "compass/css3/images";
+
+body {
+  background: #2BA3D4;
+  color: #ffffff;
+}
+
+.container {
+  background: #2BA3D4;
+}
+
+a {
+  color: #fff;
+  &:hover {
+    color: #F384C3;
+  }
+}
+
+.header {
+  border-bottom: 1px solid #5fbadf;
+  .header-content {
+    h1 {
+      a {
+        color: #fff;
+      }
+    }
+  }
+}
+
+.header-nav-list {
+  li {
+    &.header-nav__home {
+      a:hover .icon-home {
+        color: #F384C3;
+      }
+    }
+    .icon-home {
+      color: #fff;
+    }
+  }
+}
+
+.hentry {
+  .article-header {
+    &:after {
+      background: #5fbadf;
+    }
+    h1.article__title {
+      a {
+        color: #ffffff;
+      }
+    }
+    .article-meta-list {
+      background: #2BA3D4;
+      li {
+        color: #6AC9EE;
+      }
+    }
+  }
+  .article__content,
+  .article__excerpt {
+    h2, h3 {
+      border-color: #5fbadf;
+    }
+    blockquote {
+      border-color: #ffffff;
+    }
+    ins {
+      background-color: #5BB9E1;
+    }
+  }
+}
+
+.comments-content {
+  li {
+    border-color: #5fbadf;
+    &:before {
+      color: #fff;
+      background: #5fbadf;
+    }
+    a {
+      color: #fff;
+      &:hover {
+        color: #F384C3;
+      }
+    }
+    .comment__reply-link {
+      color: #ffffff;
+      background-color: #5fbadf;
+      &:hover {
+        background-color: #F384C3;
+      }
+    }
+    time {
+      color: #6AC9EE;
+    }
+  }
+}
+
+.comment-form-container {
+  textarea,
+  input[type="text"],
+  input[type="email"],
+  input[type="url"] {
+    color: #ffffff;
+    border-color: #5fbadf;
+    background-color: #5BB9E1;
+    &:focus {
+      border-color: #fff;
+    }
+  }
+  input[type="submit"],
+  input[type="button"] {
+    background-color: #5fbadf;
+    &[name="post"] {
+      color: #333;
+      background-color: #fff;
+    }
+    &:hover,
+    &:focus,
+    &:active {
+      background-color: #F384C3;
+    }
+  }
+  .form-item-captcha {
+    background: #5BB9E1;
+    @include background-image(linear-gradient(90deg, transparent 50%, transparent 50%), linear-gradient(135deg, rgba(#73c0e1, 0.5) 25%, transparent 25%, transparent 50%, rgba(#73c0e1, 0.5) 50%, rgba(#73c0e1, 0.5) 75%, transparent 75%, transparent));
+    background-size: 100% 100%, 100px 100px;
+    input[type="text"] {
+      border-color: #C0E5F5;
+      background-color: #5BB9E1;
+      &:focus {
+        border-color: #fff;
+      }
+    }
+  }
+  .comment-form__allow-html-help {
+    color: #6AC9EE;
+  }
+}
+
+.article-content-container {
+  .trackback-url {
+    border-color: #5fbadf;
+    background: #5fbadf;
+  }
+  .trackback-url-inner {
+    background: #5BB9E1;
+  }
+  .trackbacks__list-item {
+    border-color: #5fbadf;
+    .trackback__date,
+    .trackback__excerpt {
+      color: #6AC9EE;
+    }
+  }
+}
+
+.article-tags {
+  border-color: #5fbadf;
+  .article-tags__title {
+    color: #ffffff;
+    span {
+      background: #2BA3D4;
+    }
+  }
+}
+
+.article-navigation {
+  li {
+    a {
+      background: #5fbadf;
+      color: #fff;
+      &:hover,
+      &:active {
+        background: #F384C3;
+      }
+    }
+  }
+}
+
+.loading {
+  background: #ffffff;
+}
+
+.footer,
+.widgets-bottom {
+  background: transparent;
+  border: 0 none transparent;
+}
+
+.widget {
+  color: #ffffff;
+  a {
+    color: #ffffff;
+    &:hover,
+    &:active {
+      color: #F384C3;
+    }
+  }
+}
+
+.widget__title {
+  border-color: #5fbadf;
+}
+
+.widget-search {
+  .widget-search__input {
+    border-color: #2BA3D4;
+    &:focus {
+      border-color: #F384C3;
+    }
+  }
+  .widget-search__button {
+    color: #333;
+    background-color: #fff;
+    &:hover,
+    &:focus {
+      background-color: #F384C3;
+    }
+    &.button-disabled {
+      background-color: #5fbadf;
+      &:hover,
+      &:focus {
+        background-color: #5fbadf;
+      }
+    }
+  }
+}
+
+.no-result-found {
+  background: #5fbadf;
+  border-color: #5fbadf;
+}
+
+.no-search-description {
+  pre {
+    background: #5BB9E1;
+    border-color: #5fbadf;
+  }
+}
+
+.widget-syndication {
+  a {
+    .icon-feed {
+      color: #fff;
+    }
+    &:hover,
+    &:active {
+      color: #F384C3;
+      .icon-feed {
+        color: #F384C3;
+      }
+    }
+  }
+}
+
+.widget-archive-category,
+.widget-recent-entries,
+.widget-pages,
+.widget-archive-monthly {
+  .widget-list__item {
+    a {
+      background: #5BB9E1;
+      &:hover,
+      &:active {
+        color: inherit;
+        background: #F384C3;
+      }
+    }
+  }
+}
+
+.tags .main .widget-tag-cloud {
+  border-color: #5fbadf;
+}
+
+.tag-search-description {
+  background: #5BB9E1;
+}
+
+@media screen and (max-width: 520px) {
+  .header-nav-list {
+    li {
+      border-top: 1px solid #5fbadf;
+    }
+  }
+}
