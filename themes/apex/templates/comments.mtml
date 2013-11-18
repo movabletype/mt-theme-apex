@@ -1,0 +1,43 @@
+<mt:ifCommentsActive>
+<section id="comments" class="comments">
+
+<mt:if tag="EntryCommentCount">
+  <header class="comments-header">
+    <h1 class="comments__title">
+      <span class="icon-bubbles"></span>
+      <mt:EntryCommentCount singular="<__trans phrase="Comment">" plural="<__trans phrase="Comments">" none="<__trans phrase="Comments">">
+    </h1>
+  </header>
+
+  <div class="comments-content"><div><div class="comments-content-inner">
+    <ul class="comments__list">
+<mt:comments>
+      <li id="comment-<mt:CommentID>" data-count="<mt:CommentOrderNumber>"
+        class="comment comments__list__item<mt:IfCommenterIsEntryAuthor> entry-author-comment</mt:IfCommenterIsEntryAuthor>" itemprop="comment" itemscope itemtype="http://schema.org/UserComments">
+
+        <span class="vcard author"><mt:commentAuthorLink></span>
+
+<mt:ifCommentParent><mt:commentParent>
+        <span class="reply-to"><a href="<mt:CommentLink>"><mt:commentAuthor></a></span>
+</mt:commentParent></mt:ifCommentParent>
+
+        <time class="comment__date" datetime="<mt:CommentDate format_name="iso8601">"><mt:commentDate></time>
+        <div class="comment__text" itemprop="commentText">
+<mt:commentBody>
+        </div>
+
+<mt:ifCommentsAccepted>
+        <div class="comment-reply-link-container">
+          <a class="comment__reply-link icon-forward" title="<__trans phrase="Reply">" data-author="<mt:commentAuthor encode_html="1">" data-cid="<mt:CommentID>"><__trans phrase="Reply"></a>
+        </div>
+</mt:ifCommentsAccepted>
+      </li>
+</mt:comments>
+    </ul>
+</div></div></div>
+</mt:if>
+</section>
+
+<mt:include module="<__trans phrase="Comment Form">">
+
+</mt:ifCommentsActive>

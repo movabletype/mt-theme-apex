@@ -1,0 +1,16 @@
+<div class="widget-search widget">
+  <div class="widget-content"><div><input type="text" name="search" class="widget-search__input" value="<mt:SearchString>"><button type="submit" name="button" class="widget-search__button"><__trans phrase="Search"></button></div></div>
+  <script type="text/javascript">
+    $(function(){
+      $('.widget-search__button').on('click',function(){
+        location.href = '<$mt:Link template="search" encode_html="1"$>#'+$(this).parent().find('.widget-search__input').prop('value');
+      });
+      $('.widget-search__input').on('keypress',function(e){
+        if (e.which === 13) {
+          location.href = '<$mt:Link template="search" encode_html="1"$>#'+$(this).prop('value');
+        }
+      });
+    });
+  </script>
+</form>
+</div>

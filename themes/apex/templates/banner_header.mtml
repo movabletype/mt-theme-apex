@@ -1,0 +1,18 @@
+<header class="header" role="banner"><div><div class="header-inner">
+  <div class="header-content"><div>
+    <h1 class="header-content__title"><a href="<mt:BlogURL encode_html="1">"><mt:BlogName></a></h1>
+    <mt:If tag="BlogDescription"><p class="header-content__description"><mt:BlogDescription></p></mt:If>
+  </div></div>
+  <nav class="header-nav">
+    <ul class="header-nav-list">
+      <li class="header-nav__home"><a href="<mt:Link template="main_index" encode_html="1">"><span class="icon-home"></span><span class="header-nav__home-label"><__trans phrase="Home"><span></a></li>
+<mt:Pages tag="@ABOUT_PAGE" limit="1">
+      <li><a href="<mt:PagePermalink encode_html="1">"><__trans phrase="About"></a></li>
+</mt:Pages>
+<mt:Pages tag="@ADD_TO_SITE_NAV">
+      <li><a href="<mt:PagePermalink encode_html="1">"><mt:PageTitle></a></li>
+</mt:Pages>
+    </ul>
+  </nav>
+</div></div></header>
+

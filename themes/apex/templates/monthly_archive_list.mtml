@@ -1,0 +1,18 @@
+<mt:IfArchiveTypeEnabled archive_type="Monthly">
+<nav class="widget-archive-monthly widget">
+  <header>
+    <h1 class="widget__title"><__trans phrase="Archives"></h1>
+  </header>
+  <div class="widget-content">
+    <ol class="widget-list">
+<mt:ArchiveList archive_type="Monthly">
+      <li class="widget-list__item">
+        <a href="<mt:ArchiveLink encode_html="1">">
+          <__trans phrase="[_1] ([_2])" params="<mt:ArchiveTitle>%%<mt:ArchiveCount>">
+        </a>
+      </li>
+</mt:ArchiveList>
+    </ol>
+  </div>
+</nav>
+</mt:IfArchiveTypeEnabled>

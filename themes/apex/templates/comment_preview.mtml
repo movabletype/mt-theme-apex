@@ -1,0 +1,66 @@
+<mt:setvar name="archive" value="preview">
+<mt:setVarBlock name="title"><__trans phrase="Previewing your Comment"></mt:setVarBlock>
+<!DOCTYPE html>
+<html lang="<mt:BlogLanguage>" itemscope itemtype="http://schema.org/Blog">
+<head>
+<mt:include module="<__trans phrase="HTML Head">">
+<script type="text/javascript">
+  window._mtUserSessionState = <mt:UserSessionState>;
+  window._mtIsPreview = true;
+</script>
+<script src="<mt:Link template="javascript">"></script>
+</head>
+<body class="entry preview">
+<div class="container"><div><div class="container-inner">
+
+<mt:Include module="<__trans phrase="Banner Header">">
+
+<div class="content"><div><div class="content-inner">
+<main class="main" role="main">
+
+<div class="article-content-container">
+<section id="comments" class="comments">
+
+  <header class="comments-header">
+    <h1 class="comments__title">
+      <span class="icon-bubbles"></span>
+      <__trans phrase="Previewing your Comment">
+    </h1>
+  </header>
+
+  <div class="comments-content"><div><div class="comments-content-inner">
+    <ul class="comments__list">
+      <li id="comment-<mt:CommentID>" data-count="0"
+        class="comment comments__list__item<mt:IfCommenterIsEntryAuthor> entry-author-comment</mt:IfCommenterIsEntryAuthor>" itemprop="comment" itemscope itemtype="http://schema.org/UserComments">
+
+        <span class="vcard author"><mt:commentAuthorLink></span>
+
+<mt:ifCommentParent><mt:commentParent>
+        <span class="reply-to"><a href="<mt:CommentLink>"><mt:commentAuthor></a></span>
+</mt:commentParent></mt:ifCommentParent>
+
+        <time class="comment__date" datetime="<mt:CommentDate format_name="iso8601">"><mt:commentDate></time>
+        <div class="comment__text" itemprop="commentText">
+<mt:commentBody>
+        </div>
+      </li>
+    </ul>
+  </div></div></div>
+</section>
+
+<mt:Include module="<__trans phrase="Comment Form">">
+
+</div>
+
+</main>
+</div></div></div>
+
+
+<mt:Include module="<__trans phrase="Bottom Widgets">">
+<mt:Include module="<__trans phrase="Banner Footer">">
+
+</div></div></div>
+
+<mt:Include module="<__trans phrase="Body Footer">">
+</body>
+</html>

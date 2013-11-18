@@ -1,0 +1,18 @@
+<mt:If tag="BlogEntryCount">
+<nav class="widget-recent-entries widget">
+  <header>
+    <h1 class="widget__title"><__trans phrase="Recent Entries"></h1>
+  </header>
+  <div class="widget-content">
+    <ul class="widget-list">
+<mt:Entries lastn="5">
+      <li class="widget-list__item">
+        <a href="<mt:EntryPermalink>">
+          <mt:EntryTitle>
+        </a>
+      </li>
+</mt:Entries>
+    </ul>
+  </div>
+</nav>
+</mt:If>

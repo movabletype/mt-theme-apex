@@ -1,0 +1,30 @@
+<mt:setVarBlock name="archive"><mt:archiveType lower_case="1"></mt:setVarBlock>
+<!DOCTYPE html>
+<html lang="<mt:BlogLanguage>" itemscope itemtype="http://schema.org/Blog">
+<head>
+<mt:include module="<__trans phrase="HTML Head">">
+<mt:ifCommentsActive>
+<script src="<mt:Link template="javascript">"></script>
+</mt:ifCommentsActive>
+</head>
+<body class="entry <mt:var name="archive">">
+<div class="container"><div><div class="container-inner">
+
+<mt:Include module="<__trans phrase="Banner Header">">
+
+<div class="content"><div><div class="content-inner">
+<main class="main" role="main">
+<mt:Include module="<__trans phrase="Entry Content">">
+</main>
+</div></div></div>
+
+
+<mt:Include module="<__trans phrase="Bottom Widgets">">
+<mt:Include module="<__trans phrase="Banner Footer">">
+
+</div></div></div>
+
+<mt:Include module="<__trans phrase="Body Footer">">
+</body>
+</html>
+

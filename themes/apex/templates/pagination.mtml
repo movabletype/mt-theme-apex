@@ -1,0 +1,134 @@
+<script type="text/template" id="article-navigation">
+<nav class="article-navigation">
+  <ul>
+    <li class="article-navigation__prev">
+      <a rel="prev" class="article-navigation__prev-link">
+        <span class="icon-arrow-down"></span>
+        <__trans phrase="Previous entry">
+      </a>
+    </li>
+  </ul>
+</nav>
+</script>
+
+<mt:if name="archive" eq="search">
+<script type="text/template" id="no-search">
+  <div class="no-search-description">
+    <p><__trans phrase="By default, this search engine looks for all of the specified words in any order. To search for an exact phrase, enclose the phrase in quotes:"></p>
+    <pre><code>"<__trans phrase="movable type">"</code></pre>
+    <p><__trans phrase="The search engine also supports the AND, OR, and NOT boolean operators:"></p>
+    <pre><code><__trans phrase="personal OR publishing"></code></pre>
+    <pre><code><__trans phrase="publishing NOT personal"></code></pre>
+  </div>
+</script>
+</mt:if>
+
+<script type="text/javascript">
+$(function () {
+  var count = parseInt('<mt:var name="count">', 10) || 10,
+    limit = parseInt('<mt:var name="limit">',10) || $('.articles article').length,
+    length = $('.articles article').length,
+    baseUrl = '<mt:CGIPath><mt:SearchScript>?IncludeBlogs=<mt:blogID>',
+    page = 1,
+    range = '<mt:var name="archive_range">',
+    archiveId = '<mt:var name="archive_id">',
+    archiveType = '<mt:var name="archive_type">' || 'Index',
+    $loadingImg = $('<span class="loading"><img src="<mt:SupportDirectoryURL>theme_static/apex/images/indicator.gif" width="20" height="20"></span>'),
+    $nav = $('<div>').html($('#article-navigation').html()),
+    hash, tag = '';
+
+  function getHash(){
+    var match = window.location.href.match(/#(.*)$/);
+    return match ? match[1] : '';
+  }
+
+  function navigationHandler() {
+    var hash = getHash();
+<mt:if name="archive" eq="tags">
+    tag = '&tag=' + hash;
+<mt:elseif name="archive" eq="search">
+    tag = '&search=' + hash.replace(/\s/g,'+');
+</mt:if>
+    page = page + 1;
+
+    length = $('.articles article').length;
+    var dfd = $.get(baseUrl + tag + archiveId + range + '&archive_type=' + archiveType + '&limit='+ limit + '&page=' + page + '&format=js'),
+        $link = $('.article-navigation__prev-link');
+
+    $link.hide();
+    $link.after($loadingImg);
+
+    dfd.done(function (resp) {
+      $loadingImg.remove();
+
+      if (!resp.error && resp.result && resp.result.content) {
+        var $el = $('<div>' + resp.result.content + '</div>');
+<mt:if name="archive" like="(tags|search)">
+        count = length + $el.find('article').length;
+<mt:else>
+        length = length + $el.find('article').length;
+</mt:if>
+
+        $('.articles').append($el);
+
+        if (count > length && resp.result.next_url) {
+          $link.show();
+          $('.article-navigation__prev-link').one('click', navigationHandler);
+        } else {
+          $('.article-navigation').remove();
+        }
+      } else {
+        if(!length && !!hash){
+          var msg = '<__trans phrase="No results found for &ldquo;[_1]&rdquo;." params="__TAGNAME__">'.replace('__TAGNAME__',hash),
+            $div = $('<div class="no-result-found"></div>').text(msg),
+            $container = $('<div class="no-result-found-container"></div>').append($div);
+
+          $('.articles').append($container);
+        }
+      }
+    });
+  }
+
+  function hashChangeHandler(){
+    var $articles = $('.articles')
+    $articles.empty();
+
+    if(!$('.article-navigation').length){
+      $nav = $('<div>').html($('#article-navigation').html());
+      $articles.after($nav);
+    }
+
+    limit = parseInt('<mt:SearchMaxResults>',10) || 10;
+    count = limit;
+    length = 0;
+    page = 0;
+    var hash = getHash();
+    if(!!hash){
+<mt:if name="archive" eq="search">
+      $('.widget-search__input').prop('value',hash);
+<mt:elseif name="archive" eq="tags">
+      $('.tag-search-description').show();
+      $('.tag-search-description__tagname').text(hash);
+</mt:if>
+      $('.article-navigation__prev-link').off('click');
+      navigationHandler();
+    } else {
+      $('.tag-search-description').hide();
+<mt:if name="archive" eq="search">
+      $('.articles').html($('#no-search').html());
+</mt:if>
+      $('.article-navigation').remove();
+    }
+  }
+
+  if(count !== length){
+    $('.articles').after($nav);
+    $('.article-navigation__prev-link').one('click', navigationHandler);
+  }
+
+<mt:if name="archive" like="(tags|search)">
+  $(window).on('hashchange', hashChangeHandler);
+  hashChangeHandler();
+</mt:if>
+});
+</script>

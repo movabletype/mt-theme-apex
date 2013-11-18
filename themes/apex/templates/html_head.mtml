@@ -1,0 +1,64 @@
+<meta charset="<mt:PublishCharset>">
+<meta name="generator" content="<mt:ProductName version="1">">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<mt:assets tag="@SITE_FAVICON" limit="1"><link rel="shortcut icon" href="<mt:AssetURL encode_html="1">"></mt:Assets>
+<link rel="stylesheet" href="<mt:SupportDirectoryURL>theme_static/apex/prism/prism.css">
+<link rel="stylesheet" href="<mt:SupportDirectoryURL>theme_static/apex/font.css">
+<link rel="stylesheet" href="<mt:Link template="styles" encode_html="1">">
+<link rel="start" href="<mt:BlogURL encode_html="1">">
+<link rel="alternate" type="application/atom+xml" title="Recent Entries" href="<mt:Link template="feed_recent">" />
+
+<mt:if name="archive" eq="individual">
+<title><mt:EntryTitle encode_html="1"> - <mt:BlogName encode_html="1"></title>
+<meta property="og:title" content="<mt:EntryTitle encode_html="1">" itemprop="description">
+<meta property="og:url" content="<mt:EntryPermalink encode_html="1">" itemprop="url">
+<mt:entryAssets type="image" limit="1">
+  <meta property="og:image" content="<mt:AssetThumbnailURL height="320" square="1" encode_html="1">" itemprop="image">
+<mt:else>
+  <mt:assets type="image" tag="@SITE_ICON" limit="1">
+    <meta property="og:image" content="<mt:AssetThumbnailURL height="320" square="1" encode_html="1">">
+  </mt:assets>
+</mt:entryAssets>
+<meta property="og:description" content="<mt:EntryExcerpt remove_html="1" encode_html="1">">
+<meta name="description" content="<mt:EntryExcerpt remove_html="1" encode_html="1">">
+
+<mt:elseIf name="archive" eq="page">
+<title><mt:PageTitle encode_html="1"> - <mt:BlogName encode_html="1"></title>
+<meta property="og:title" content="<mt:PageTitle encode_html="1">">
+<meta property="og:url" content="<mt:PagePermalink encode_html="1">">
+<mt:assets type="image" tag="@SITE_ICON" limit="1">
+  <meta property="og:image" content="<mt:AssetThumbnailURL height="320" square="1" encode_html="1">">
+</mt:assets>
+<meta property="og:description" content="<mt:PageExcerpt remove_html="1" encode_html="1">">
+<meta name="description" content="<mt:PageExcerpt remove_html="1">">
+
+<mt:else>
+<mt:if name="title">
+<title><mt:var name="title"> - <mt:BlogName encode_html="1"></title>
+<mt:else>
+<title><mt:BlogName encode_html="1"></title>
+</mt:if>
+
+<meta property="og:title" content="<mt:BlogName encode_html="1">">
+<meta property="og:url" content="<mt:BlogURL encode_html="1">">
+<mt:assets type="image" tag="@SITE_ICON" limit="1">
+  <meta property="og:image" content="<mt:AssetThumbnailURL height="320" square="1" encode_html="1">">
+</mt:assets>
+<mt:if tag="BlogDescription">
+  <meta property="og:description" content="<mt:BlogDescription remove_html="1" encode_html="1">">
+  <meta name="description" content="<mt:BlogDescription remove_html="1" encode_html="1">">
+</mt:if>
+</mt:if>
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="<mt:BlogLanguage setvar="blog_lang"><mt:If name="blog_lang" eq="ja">ja_JP<mt:else><mt:Var name="blog_lang"></mt:If>">
+<meta property="og:site_name" content="<mt:BlogName encode_html="1">">
+
+<mt:CanonicalLink>
+<mt:StatsSnippet>
+
+<script src="<mt:SupportDirectoryURL>theme_static/apex/jquery/jquery.min.js"></script>
+<!--[if lte IE 8]>
+<script src="<mt:SupportDirectoryURL>theme_static/apex/ie/html5shiv.js"></script>
+<script src="<mt:SupportDirectoryURL>theme_static/apex/ie/json3.js"></script>
+<![endif]-->

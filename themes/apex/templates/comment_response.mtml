@@ -1,0 +1,50 @@
+<mt:If name="comment_confirmation">
+  <mt:Var name="page_title" value="<__trans phrase="Confirmation...">">
+  <mt:Var name="message" value="<p class="message success"><__trans phrase="Your comment has been submitted!"></p>">
+<mt:Else name="comment_pending">
+  <mt:Var name="page_title" value="<__trans phrase="Thank you for commenting.">">
+  <mt:Var name="message" value="<p class="message success"><__trans phrase="Your comment has been received and held for review by a blog administrator."></p>">
+<mt:Else name="comment_error">
+  <mt:Var name="page_title" value="<__trans phrase="Comment Submission Error">">
+  <mt:SetVarBlock name="message"><p class="message error"><__trans phrase="Your comment submission failed for the following reasons: [_1]" params="<mt:ErrorMessage>"></p></mt:SetVarBlock>
+</mt:If>
+
+<mt:setvar name="archive" value="response">
+<mt:setVarBlock name="title"><mt:var name="page_title" encode_html="1"></mt:setVarBlock>
+<!DOCTYPE html>
+<html lang="<mt:BlogLanguage>" itemscope itemtype="http://schema.org/Blog">
+<head>
+<mt:include module="<__trans phrase="HTML Head">">
+</head>
+<body class="entry response">
+<div class="container"><div><div class="container-inner">
+
+<mt:Include module="<__trans phrase="Banner Header">">
+
+<div class="content"><div><div class="content-inner">
+<main class="main" role="main">
+
+<div class="article-content-container">
+<section id="comments" class="comments">
+  <header class="comments-header">
+    <h1 class="comments__title"><mt:Var name="page_title"></h1>
+  </header>
+
+  <div>
+<mt:Var name="message">
+    <p><__trans phrase="Return to the <a href="[_1]">original entry</a>." params="<mt:If name="comment_error">javascript:history.back()<mt:Else><mt:EntryLink></mt:If>"></p>
+  </div>
+</section>
+</div>
+
+</main>
+</div></div></div>
+
+<mt:Include module="<__trans phrase="Bottom Widgets">">
+<mt:Include module="<__trans phrase="Banner Footer">">
+
+</div></div></div>
+
+<mt:Include module="<__trans phrase="Body Footer">">
+</body>
+</html>

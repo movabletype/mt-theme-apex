@@ -1,0 +1,30 @@
+<mt:ifPingsActive>
+<aside id="trackbacks" class="trackbacks feedback">
+  <header class="trackbacks-header">
+    <h1 class="trackbacks__title">
+      <span class="icon-airplane"></span>
+      <mt:EntryTrackbackCount singular="<__trans phrase="TrackBack">" plural="<__trans phrase="TrackBacks">" none="<__trans phrase="TrackBacks">">
+    </h1>
+  </header>
+
+<mt:ifPingsAccepted>
+  <div class="trackback-url"><div><div class="trackback-url-inner">
+    <__trans phrase="TrackBack URL: [_1]" params="<mt:EntryTrackbackLink>">
+  </div></div></div>
+</mt:ifPingsAccepted>
+
+<mt:if tag="EntryTrackbackCount">
+  <div class="trackback-content"><div><div class="trackbacks-content-inner">
+    <ul class="trackbacks__list">
+<mt:pings>
+      <li id="ping-<mt:PingID>" class="trackbacks__list-item">
+        <span class="trackback__info"><__trans phrase="<a href="[_1]">[_2]</a> - [_3]</a>" params="<mt:pingURL encode_html="1">%%<mt:pingTitle>%%<mt:pingBlogName>"></span>
+        <time class="trackback__date" datetime="<mt:PingDate format_name="iso8601">"><mt:pingDate></time>
+        <span class="trackback__excerpt"><mt:PingExcerpt></span>
+      </li>
+</mt:pings>
+    </ul>
+  </div></div></div>
+</mt:if>
+</aside>
+</mt:ifPingsActive>

@@ -1,0 +1,49 @@
+<mt:var name="entries_per_page" value="10">
+<mt:setVarBlock name="archive_type"><mt:archiveType></mt:setVarBlock>
+<mt:if name="archive_type" like="Category"><mt:var name="archive" value="category"><mt:else><mt:var name="archive" value="datebased"></mt:if>
+<mt:setVarBlock name="count"><mt:archiveCount></mt:setVarBlock>
+<mt:setVarBlock name="title"><__trans phrase="[_1] Archives" params="<mt:ArchiveTitle encode_html="1">"></mt:setVarBlock>
+
+<!DOCTYPE html>
+<html lang="<mt:BlogLanguage>" itemscope itemtype="http://schema.org/Blog">
+<head>
+<mt:include module="<__trans phrase="HTML Head">">
+</head>
+<body class="<mt:var name="archive">">
+<div class="container"><div><div class="container-inner">
+
+<mt:Include module="<__trans phrase="Banner Header">">
+
+<div class="content"><div><div class="content-inner">
+
+<main class="main" role="main">
+<div class="articles">
+<mt:Entries lastn="$entries_per_page">
+<mt:Include module="<__trans phrase="Entry Content">">
+</mt:Entries>
+</div>
+</main>
+
+</div></div></div>
+
+<mt:Include module="<__trans phrase="Bottom Widgets">">
+<mt:Include module="<__trans phrase="Banner Footer">">
+
+</div></div></div>
+
+<mt:Include module="<__trans phrase="Body Footer">">
+
+<mt:if name="count" gt="$entries_per_page">
+  <mt:var name="limit" value="$entries_per_page">
+  <mt:if name="archive_type" like="(Daily|Weekly|Monthly|Yearly)">
+    <mt:setVarBlock name="archive_range">&year=<mt:ArchiveDate format="%Y">&month=<mt:ArchiveDate format="%m">&=<mt:ArchiveDate format="%d"></mt:setVarBlock>
+  </mt:if>
+  <mt:if name="archive_type" like="Category">
+    <mt:setVarBlock name="archive_id">&category=<mt:categoryID></mt:setVarBlock>
+  </mt:if>
+<mt:Include module="<__trans phrase="Pagination">">
+</mt:if>
+
+</body>
+</html>
+

@@ -1,0 +1,576 @@
+(function () {
+  var commentForm = '#comment-form',
+
+    commentFormContainer = '.comment-form-container',
+    commentCommonFormContainer = '.form-common-container',
+    commentFormFooterContainer = '.form-footer-container',
+    unregisteredUserFormContainer = '.form-unregistered-container',
+
+    signinContainer = '#form-item-signin',
+    commentReplyContainer = '#form-item-reply',
+    commentCaptchaContainer = '#form-item-captcha',
+
+    commentArmorField = '#comment-form__armor',
+    commentParentIdField = '#comment-form__parent-id',
+    commentPreviewField = '#comment-form__preview',
+    commentTextField = '#comment-form__text',
+    commentBakeCookieCheckbox = '#comment-form__bake-cookie',
+    commentReplyCheckbox = '#comment-form__reply',
+
+    commentsList = '.comments__list',
+    commentReplyLink = '.comment__reply-link',
+
+    commentSigninLinkClassName = 'comment-form__signin-link',
+    commentSignoutLinkClassName = 'comment-form__signout-link',
+    commentDisabledClassName = 'button-disabled',
+
+    commentSubmitButton = '#comment-form__submit-button',
+    commentPreviewButton = '#comment-form__preview-button',
+    commentCancelButton = '#comment-form__cancel-button',
+
+    trackbacksContainer = '#trackbacks';
+
+  var mtCookieName = '<mt:userSessionCookieName>',
+    mtCookieDomain = '<mt:userSessionCookieDomain>',
+    mtCookiePath = '<mt:userSessionCookiePath>',
+    mtCookieTimeout = parseInt('<mt:userSessionCookieTimeout>', 10),
+    mtSigninLink = '<mt:signInLink>',
+    mtSignOutLink = '<mt:signOutLink>',
+    mtBlogURL = '<mt:blogURL encode_url="1">',
+    mtCGIPath = '<mt:CGIPath>',
+    mtCommentScript = '<mt:commentScript>',
+    mtBlogID = '<mt:blogID>',
+    mtBlogSitePathEncodeShar1 = '<mt:blogSitePath encode_sha1="1">',
+    mtCaptchaFields = '<mt:captchaFields>',
+    mtIfRegistrationRequired = !! parseInt('<mt:ifRegistrationRequired>1<mt:else>0</mt:ifRegistrationRequired>', 10),
+    mtIfRegistrationAllowed = !! parseInt('<mt:ifRegistrationAllowed>1<mt:else>0</mt:ifRegistrationAllowed>', 10);
+
+  var canonicalURL = $("link[rel='canonical']").attr('href'),
+    isPreview = window._mtIsPreview,
+    mtCookie, mtUser, mtCaptcha;
+
+  mtCookie = {
+    escape: function (s) {
+      return s.replace(/'/g, "&apos;");
+    },
+    unescape: function (s) {
+      return s.replace(/&apos;/g, "'");
+    },
+    generateCookieString: function (user) {
+      var str = "",
+        i,
+        props = ['name', 'url', 'email', 'profile', 'userpic', 'sid'],
+        booleanProps = ['is_trusted', 'is_author', 'is_banned', 'can_post', 'can_comment'];
+
+      for (i = 0; i < props.length; i++) {
+        if (user[props[i]]) {
+          str = str + props[i] + ":'" + mtCookie.escape(user[props[i]]) + "';";
+        }
+      }
+
+      if (user.is_authenticated) {
+        str = str + "is_authenticated:'1';";
+      }
+
+      for (i = 0; i < booleanProps.length; i++) {
+        str = str + booleanProps[i] + ":'" + (user[booleanProps[i]] ? "1" : "0") + "';";
+      }
+
+      str = str.replace(/;$/, '');
+      return str;
+    },
+    getCookie: function () {
+      var cookie = document.cookie,
+        prefix = mtCookieName + '=',
+        startIndex = cookie.indexOf(prefix),
+        ret = '';
+
+      if (startIndex !== -1) {
+        var endIndex = cookie.indexOf(";", startIndex + prefix.length);
+        endIndex = endIndex === -1 ? cookie.length : endIndex;
+        var thisCookie = cookie.substring(startIndex + prefix.length, endIndex);
+        if (!thisCookie.match(/\%u/i)) {
+          ret = decodeURIComponent(thisCookie);
+        }
+      }
+      return ret;
+    },
+    useSecure: function () {
+      return location.protocol === 'https:';
+    },
+    setCookie: function (user, cachePeriod) {
+      var name = mtCookieName,
+        path = mtCookiePath,
+        domain = mtCookieDomain,
+        expires = new Date(),
+        skew = (new Date(0)).getTime(),
+        value = mtCookie.generateCookieString(user),
+        curCookie;
+
+      if (skew > 0) {
+        expires.setTime(expires.getTime() - skew);
+      }
+
+      cachePeriod = cachePeriod || mtCookieTimeout * 1000;
+      expires.setTime(expires.getTime() + cachePeriod);
+
+      if (domain && (/^\.?localhost$/.test(domain) || /^[0-9\.]+$/.test(domain))) {
+        domain = null;
+      }
+
+      curCookie = name + "=" + encodeURIComponent(value) +
+        (expires ? "; expires=" + expires.toGMTString() : "") +
+        (path ? "; path=" + path : "") +
+        (domain ? "; domain=" + domain : "") +
+        (mtCookie.useSecure() ? "; secure" : "");
+
+      document.cookie = curCookie;
+    },
+    deleteCookie: function () {
+      var name = mtCookieName,
+        domain = mtCookieDomain,
+        path = mtCookiePath;
+
+      if (mtCookie.getCookie(name)) {
+        if (domain && domain.match(/^\.?localhost$/)) {
+          domain = null;
+        }
+        document.cookie = name + "=" +
+          (path ? "; path=" + path : "") +
+          (domain ? "; domain=" + domain : "") +
+          (mtCookie.useSecure() ? "; secure" : "") +
+          "; expires=Thu, 01-Jan-70 00:00:01 GMT";
+      }
+    }
+  };
+
+  /**<mt:ignore>
+ * @typedef {object} mtUser
+ * @property {string} name display name
+ * @property {string} url link to home page
+ * @property {string} email for anonymous only
+ * @property {string} userpic url for commenter/author
+ * @property {string} profile link to profile
+ * @property {boolean} is_authenticate user is authenticated user or not
+ * @property {boolean} is_anonymous user is anonymous or not
+ * @property {boolean} is_author user has posting right
+ * @property {boolean} is_banned banned status; neigher post/comment permissions
+ * @property {boolean} is_trusted marked as trusted user or not
+ * @property {boolean} can_post has permission to post
+ * @property {boolean} can_comment has permission to comment
+</mt:ignore>*/
+
+  mtUser = function () {
+    var user;
+
+    function userFactory() {
+      user = {};
+      if(window._mtUserSessionState){
+        user = window._mtUserSessionState;
+      } else {
+        var cookie = mtCookie.getCookie(),
+          reg = /((name|url|email|is_authenticated|profile|userpic|sid|is_trusted|is_author|is_banned|can_post|can_comment):'([^']+?)';?)/g,
+          m;
+
+        if (cookie) {
+          while ( !! (m = reg.exec(cookie))) {
+            if (m[2]) {
+              user[m[2]] = /^(is|can)_/.test(m[2]) ? !! parseInt(m[3], 10) : mtCookie.unescape(m[3]);
+            }
+          }
+        }
+
+        user.is_anonymous = user.is_authenticated ? false : true;
+      }
+      return user;
+    }
+    return {
+      load: function () {
+        return user || userFactory();
+      },
+      clear: function () {
+        var clearedCache = user;
+        user = null;
+        mtCookie.deleteCookie();
+        return clearedCache;
+      },
+      save: function ($form) {
+        if (!isPreview) {
+          var user = mtUser.load(),
+            cachePeriod;
+
+          if ($form && $form.length && user.is_anonymous) {
+            user.can_comment = true;
+            user.name = $form.find("[name='author']").prop('value') || user.name;
+            user.email = $form.find("[name='email']").prop('value') || user.email;
+            user.url = $form.find("[name='url']").prop('value') || user.url;
+            // cache anonymous user info for a long period if the
+            // user has requested to be remembered
+            if($form.find(commentBakeCookieCheckbox).prop('checked')){
+              cachePeriod = 365 * 24 * 60 * 60 * 1000;
+            }
+          }
+
+          mtCookie.setCookie(user, cachePeriod);
+        }
+      }
+    };
+  }();
+
+  mtCaptcha = function () {
+    var isVisible = false;
+    return {
+      show: function () {
+        if (!isVisible && mtCaptchaFields && mtCaptchaFields.length) {
+          var user = mtUser.load();
+          if (!user.is_authenticated) {
+            var $el = $(commentCaptchaContainer);
+            if ($el.length) {
+              $el.html(mtCaptchaFields);
+              isVisible = true;
+            }
+          }
+        }
+      },
+      hide: function () {
+        $(commentCaptchaContainer).empty();
+        isVisible = false;
+      },
+      isVisible: function () {
+        return isVisible;
+      }
+    };
+  }();
+
+  var appendJSONP = function (mode, jsonp, opt) {
+    var ts = new Date().getTime(),
+      src = mtCGIPath + mtCommentScript + '?__mode=' + mode + '&blog_id=' + mtBlogID + '&jsonp=' + jsonp + '&ts=' + ts;
+
+    opt = opt || {};
+    for (var o in opt) {
+      src = src + '&' + o + '=' + opt[o];
+    }
+
+    $('<script src="' + src + '">').appendTo($('head'));
+  };
+
+  var eventHandlers = {
+    /**
+     * Called when comment form is sent.
+     * Required parameter: Form DOM object of comment form.
+     * If form has a 'bakecookie' member, it will be used to signal
+     * storing the anonymous commenter information to a cookie.
+     * If form has a 'armor' member, it will be used to store
+     * a token that is checked by the comment script.
+     */
+    alreadySubmitted: false,
+    handleSubmit: function () {
+      var $this = $(this);
+      if (!eventHandlers.alreadySubmitted) {
+        eventHandlers.alreadySubmitted = true;
+
+        var $armor = $this.find(commentArmorField),
+          $bakeCookie = $this.find(commentBakeCookieCheckbox),
+          $previewButton = $this.find(commentPreviewButton),
+          $submitButton = $this.find(commentSubmitButton),
+          $cancelButton = $this.find(commentCancelButton);
+
+        $armor.prop('value', mtBlogSitePathEncodeShar1);
+
+        if ($bakeCookie.length && $bakeCookie.prop('checked')) {
+          mtUser.save($this);
+        }
+
+        // disable submit buttons
+        $previewButton.attr('disabled', true).addClass(commentDisabledClassName);
+        $submitButton.attr('disabled', true).addClass(commentDisabledClassName);
+        if($cancelButton.length){
+          $cancelButton.attr('disabled', true).addClass(commentDisabledClassName);
+        }
+
+        var user = mtUser.load();
+        if (!isPreview && user.is_authenticated) {
+          // validate session; then submit
+          appendJSONP('verify_session', 'mtCommentSessionVerify', {
+            sid: user.sid
+          });
+          return false;
+        }
+        return true;
+      }
+      return false;
+    },
+    handleReply: function () {
+      var $commentReplyContainer = $(commentReplyContainer);
+      $commentReplyContainer.show();
+
+      var $this = $(this),
+        parentId = $this.data('cid'),
+        author = $this.data('author'),
+        $checkbox = $commentReplyContainer.find('input[type="checkbox"]'),
+        $label = $commentReplyContainer.find('label'),
+        $text = $(commentTextField),
+        reply_text = '<__trans phrase="Replying to <a href="[_1]" onclick="[_2]">comment from [_3]</a>" params="#comment-__PARENT__%%location.href=this.href; return false%%__AUTHOR__" escape="js">'.replace(/__PARENT__/, parentId).replace(/__AUTHOR__/, author);
+
+      $label.html(reply_text);
+
+      $checkbox.prop('value',parentId).prop('checked',true);
+
+      if ($text.css('display') !== 'none') {
+        $text.focus();
+      }
+
+      eventHandlers.handleCommentParent();
+    },
+    handleCommentParent: function () {
+      var $commentReplyContainer = $(commentReplyContainer),
+        $parentId = $(commentParentIdField),
+        $checkbox = $commentReplyContainer.find('input[type="checkbox"]'),
+        $label = $commentReplyContainer.find('label');
+
+      if ($checkbox.length && $parentId.length) {
+        var pid = 0;
+        if ($checkbox.prop('checked')) {
+          pid = $checkbox.prop('value');
+        }
+        $parentId.prop('value', pid);
+      }
+    },
+    handleBakingCookie: function () {
+      if (!this.checked) {
+        mtUser.clear();
+      }
+    },
+    handlePreview: function () {
+      $(commentPreviewField).prop('value', 1);
+    },
+    handleCancel: function () {
+      window.location = $(this).data('url');
+    },
+    handleUnLoad: function () {
+      if (eventHandlers.alreadySubmitted) {
+        $(commentSubmitButton).removeAttr('disabled').removeClass(commentDisabledClassName);
+        $(commentPreviewButton).removeAttr('disabled').removeClass(commentDisabledClassName);
+        if($(commentCancelButton).length){
+          $(commentCancelButton).removeAttr('disabled').removeClass(commentDisabledClassName);
+        }
+        eventHandlers.alreadySubmitted = false;
+      }
+      return true;
+    }
+  };
+
+  var mtCommentSessionVerify = function (resp) {
+    var $commentForm = $(commentForm);
+
+    if (resp && resp.verified) {
+      $commentForm.get(0).submit();
+    } else {
+      alert('<__trans phrase="Your session has expired. Please sign in again to comment." escape="js">');
+      mtUser.clear();
+      initializecommentForm();
+
+      if (mtIfRegistrationRequired) {
+        $commentForm.show();
+        $(commentFormFooterContainer).hide();
+      }
+    }
+  };
+  window.mtCommentSessionVerify = mtCommentSessionVerify;
+
+  var initializecommentForm = function () {
+    var $commentForm = $(commentForm),
+      user = mtUser.load();
+
+    if (user.is_banned) {
+      $(commentFormContainer).hide();
+    } else {
+      $(commentCommonFormContainer).show();
+      $(commentFormFooterContainer).show();
+      $commentForm.show();
+      $(commentFormContainer).show();
+    }
+
+    if (user.is_authenticated) {
+      $(unregisteredUserFormContainer).hide();
+      mtCaptcha.hide();
+    } else {
+      if(mtIfRegistrationRequired){
+        $(unregisteredUserFormContainer).hide();
+        $(commentCommonFormContainer).hide();
+        $(commentFormFooterContainer).hide();
+      } else {
+        $(unregisteredUserFormContainer).show();
+        mtCaptcha.show();
+      }
+    }
+
+    if (mtIfRegistrationAllowed && !isPreview) {
+      mtSignin.show();
+    }
+
+    // populate anonymous comment fields if user is cookied as anonymous
+    if ($commentForm.css('display') !== 'none') {
+      if (user.is_anonymous) {
+        if (user.email) {
+          $commentForm.find('[name="email"]').prop('value',user.email);
+        }
+        if (user.name) {
+          $commentForm.find('[name="author"]').prop('value', user.name);
+        }
+        if (user.url) {
+          $commentForm.find('[name="url"]').prop('value', user.url);
+        }
+        $commentForm.find('[name="backcookie"]').prop('checked', (user.name || user.email));
+      } else {
+        if (user.sid) {
+          $commentForm.find('[name="sid"]').prop('value', user.sid);
+        }
+      }
+      eventHandlers.handleUnLoad();
+    }
+  };
+
+  var mtSignin = {
+    move: function () {},
+    show: function () {}
+  };
+
+  /*<mt:ifRegistrationAllowed>*/
+  mtSignin.move = function (signIn) {
+    var url = signIn ? mtSigninLink : mtSignOutLink,
+      append;
+
+    if (isPreview) {
+      var $commentForm = $(commentForm);
+      append = $commentForm.length ? '&entry_id=' + $commentForm.get(0).entry_id.value : '&return_url=' + mtBlogURL;
+    } else {
+      append = '&return_url=' + canonicalURL;
+    }
+
+    mtUser.clear();
+    location.href = url + append;
+  };
+
+  mtSignin.show = function () {
+    var $commentForm = $(commentForm);
+    var $signinContainer = $(signinContainer);
+
+    if ($commentForm.length && $signinContainer.length) {
+      var cf = $commentForm.get(0),
+        entry_id = cf.entry_id ? cf.entry_id.value : null;
+
+      var phrase;
+      var user = mtUser.load();
+
+      var handleSignin = function () {
+        $signinContainer.off('click', '.' + commentSigninLinkClassName);
+        $signinContainer.empty().text('<__trans phrase="Signing in..." escape="js">');
+        mtSignin.move(true);
+      };
+
+      var handleSignout = function () {
+        $signinContainer.off('click', '.' + commentSignoutLinkClassName);
+        mtSignin.move(false);
+      };
+
+      if (user.is_authenticated) {
+        if (user.is_banned) {
+          phrase = '<__trans phrase="You do not have permission to comment on this blog. ([_1]sign out[_2])" params="<a class="__SIGNINCLASS__">%%</a>" escape="js">'.replace(/__SIGNINCLASS__/, commentSigninLinkClassName);
+        } else {
+          var user_link = '';
+          if (user.is_author) {
+            user_link = '<a href="' + mtCGIPath + mtCommentScript + '?__mode=edit_profile&blog_id=' + mtBlogID + '&return_url=' + encodeURIComponent(location.href) + '">' + user.name + '</a>';
+          } else {
+            // registered user, but not a user with posting rights
+            user_link = user.url ? '<a href="' + user.url + '">' + user.name + '</a>' : user.name;
+          }
+          // TBD: supplement phrase with userpic if one is available.
+          phrase = '<__trans phrase="Thanks for signing in, __NAME__. ([_1]sign out[_2])" params="<a class="__SIGNOUTCLASS__">%%</a>" escape="js">'.replace(/__NAME__/, user_link).replace(/__SIGNOUTCLASS__/, commentSignoutLinkClassName);
+        }
+        $signinContainer.on('click', '.' + commentSignoutLinkClassName, handleSignout);
+      } else {
+        // show sign in link
+        phrase = mtIfRegistrationRequired ? '<__trans phrase="[_1]Sign in[_2] to comment." params="<a class="__SIGNINCLASS__">%%</a>" escape="js">' : '<__trans phrase="[_1]Sign in[_2] to comment, or comment anonymously." params="<a class="__SIGNINCLASS__">%%</a>" escape="js">';
+        phrase = phrase.replace(/__SIGNINCLASS__/, commentSigninLinkClassName);
+
+        $signinContainer.on('click', '.' + commentSigninLinkClassName, handleSignin);
+      }
+      $signinContainer.html(phrase);
+    }
+  };
+
+  var mtSaveUserInfo = function (resp) {
+    if (resp.error) {
+      user = mtUser.load();
+      if (!user.is_authenticated) {
+        alert('<__trans phrase="The sign-in attempt was not successful; Please try again." escape="js">');
+        mtUser.clear();
+      }
+    } else {
+      mtUser.clear();
+      mtCookie.setCookie(resp);
+    }
+    initializecommentForm();
+  };
+  window.mtSaveUserInfo = mtSaveUserInfo;
+
+  var initializeCommenter = function () {
+    /**
+     * If request contains a '#_login' or '#_logout' hash, use this to
+     * also delete the blog-side user cookie, since we're coming back from
+     * a login, logout or edit profile operation.
+     */
+
+    var hash = (window.location.hash);
+    hash.match(/^#_(.*)$/);
+    var command = RegExp.$1 || '';
+    if (command === 'refresh') {
+      // Back from profile edit screen.
+      // Reload userinfo with current session ID.
+      var clearedUser = mtUser.clear();
+      appendJSONP('userinfo', 'mtSaveUserInfo', {
+        sid: clearedUser.sid
+      });
+    } else if (command === 'logout') {
+      // clear any logged in state
+      mtUser.clear();
+      initializecommentForm();
+    } else if (command.match(/^login_(.*)$/)) {
+      var sid = RegExp.$1;
+      appendJSONP('userinfo', 'mtSaveUserInfo', {
+        ott: sid
+      });
+    } else {
+      initializecommentForm();
+    }
+  };
+  /*</mt:IfRegistrationAllowed>*/
+
+  $(function () {
+    /*<mt:Unless tag="IfPingsAccepted">*/
+    $(trackbacksContainer).hide();
+    /*</mt:Unless>*/
+
+    /*<mt:if tag="IfCommentsAccepted">*/
+    var $commentForm = $(commentForm);
+    $(commentPreviewField).prop('value', '');
+    $(window).on('unload', eventHandlers.handleUnLoad);
+    $(commentsList).on('click', commentReplyLink, eventHandlers.handleReply);
+    $commentForm.on('click', commentReplyCheckbox, eventHandlers.handleCommentParent);
+    $(commentBakeCookieCheckbox).on('change', eventHandlers.handleBakingCookie);
+    $commentForm.on('click', commentPreviewButton, eventHandlers.handlePreview);
+    $commentForm.on('click', commentCancelButton, eventHandlers.handleCancel);
+    $commentForm.on('submit', eventHandlers.handleSubmit);
+    /*<mt:else>*/
+    $(commentFormContainer).hide();
+    /*</mt:if>*/
+
+    /*<mt:ifRegistrationAllowed>*/
+    initializeCommenter();
+    /*<mt:else>*/
+    initializecommentForm();
+    /*</mt:ifRegistrationAllowed>*/
+  });
+
+})();

@@ -1,0 +1,30 @@
+<mt:setVarBlock name="title"><__trans phrase="Page Not Found"></mt:setVarBlock>
+<!DOCTYPE html>
+<html lang="<mt:BlogLanguage>" itemscope itemtype="http://schema.org/Blog">
+<head>
+<mt:include module="<__trans phrase="HTML Head">">
+</head>
+<body>
+<div class="container"><div><div class="container-inner">
+
+<mt:Include module="<__trans phrase="Banner Header">">
+
+<div class="content"><div><div class="content-inner">
+
+<main class="main" role="main">
+<section class="dynamic-error">
+  <h1><mt:var name="title"></h1>
+  <pre><mt:ErrorMessage></pre>
+</section>
+</main>
+
+</div></div></div>
+
+<mt:Include module="<__trans phrase="Bottom Widgets">">
+<mt:Include module="<__trans phrase="Banner Footer">">
+
+</div></div></div>
+
+<mt:Include module="<__trans phrase="Body Footer">">
+</body>
+</html>

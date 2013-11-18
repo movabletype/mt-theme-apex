@@ -1,0 +1,29 @@
+<script src="<mt:SupportDirectoryURL>theme_static/apex/masonry/masonry.pkgd.min.js"></script>
+<script type="text/javascript">
+  $(function(){
+    var $container = $('#widgets-masonry-container');
+    if($container.length){
+      var $loadingImg = $('<span class="loading"><img src="<mt:SupportDirectoryURL>theme_static/apex/images/indicator.gif" width="20" height="20"></span>');
+      $container.append($loadingImg);
+
+      var dfd = $.get('<mt:Link template="related_contents" encode_html="1">');
+      dfd.done(function(contents){
+        $container.empty().html(contents);
+        setTimeout(function(){
+          var msnry = new Masonry( $container.get(0), {
+            columnWidth: '.widget',
+            itemSelector: '.widget',
+            gutter: 0
+          });
+        },0)
+      });
+
+      dfd.fail(function(){
+        $container.empty();
+      })
+    }
+  });
+</script>
+<!--[if gt IE 9]> -->
+<script src="<mt:SupportDirectoryURL>theme_static/apex/prism/prism.js"></script>
+<!-- <![endif]-->

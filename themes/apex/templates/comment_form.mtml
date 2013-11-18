@@ -1,0 +1,69 @@
+<mt:ifCommentsAccepted>
+<section class="comment-form-container"><div><div class="comments-form-container-inner">
+
+  <header class="comment-form-header">
+    <h1 class="comment-form__title"><span class="icon-quill"></span><__trans phrase="Post a Comment"></h1>
+  </header>
+
+  <div class="comment-form-content">
+    <form method="post" action="<mt:CGIPath><mt:CommentScript>" name="comments_form" id="comment-form">
+      <input type="hidden" name="static" value="1">
+      <input type="hidden" name="armor" value="1" id="comment-form__armor">
+      <input type="hidden" name="entry_id" value="<mt:EntryID>">
+      <input type="hidden" name="__lang" value="<mt:BlogLanguage>">
+      <input type="hidden" name="parent_id" value="<mt:CommentParentID escape="html">" id="comment-form__parent-id">
+      <input type="hidden" name="preview" value="<mt:if name="comment_preview">1</mt:if>" id="comment-form__preview">
+      <input type="hidden" name="sid" value="">
+
+      <div id="form-item-signin" class="form-item-signin"></div>
+      <div class="form-common-container">
+        <div class="form-item-text">
+          <textarea name="text" id="comment-form__text" class="text"><mt:If name="comment_preview"><mt:CommentBody autolink="0" sanitize="0" convert_breaks="0" encode_html="1"></mt:If></textarea>
+<mt:IfAllowCommentHTML>
+          <span class="comment-form__allow-html-help"><__trans phrase="(You may use HTML tags for style)"></span>
+</mt:IfAllowCommentHTML>
+        </div>
+
+        <div id="form-item-reply" class="form-item-reply">
+          <input type="checkbox" id="comment-form__reply" name="comment_reply" value="" />
+          <label for="comment-form__reply"><__trans phrase="Reply to comment"></label>
+        </div>
+      </div>
+
+      <div class="form-unregistered-container">
+        <div class="form-item-author">
+          <label for="comment-form__author"><__trans phrase="Name"></label>
+          <input type="text" id="comment-form__author" name="author" value="<mt:If name="comment_preview"><mt:CommentAuthor encode_html="1"></mt:If>" />
+        </div>
+        <div class="form-item-email">
+          <label for="comment-form__email"><__trans phrase="Email Address"></label>
+          <input type="text" id="comment-form__email" name="email" value="<mt:If name="comment_preview"><mt:CommentEmail encode_html="1"></mt:If>" />
+        </div>
+        <div class="form-item-url">
+          <label for="comment-form__url"><__trans phrase="URL"></label>
+          <input type="text" id="comment-form__url" name="url" value="<mt:If name="comment_preview"><mt:CommentURL encode_html="1"></mt:If>" />
+        </div>
+<mt:unless name="comment_preview">
+        <div class="form-item-bake-cookie">
+          <input type="checkbox" id="comment-form__bake-cookie" name="bakecookie" value="1" accesskey="r" />
+          <label for="comment-form__bake-cookie"><__trans phrase="Remember personal info?"></label>
+        </div>
+</mt:unless>
+      </div>
+
+      <div class="form-footer-container">
+        <div id="form-item-captcha" class="form-item-captcha"></div>
+
+        <div class="form-item-buttons">
+          <input type="submit" accesskey="s" name="post" id="comment-form__submit-button" class="icon-quill" value="<__trans phrase="Submit">">
+          <input type="submit" accesskey="v" name="preview_button" id="comment-form__preview-button" value="<__trans phrase="Preview">">
+<mt:If name="comment_preview">
+          <input type="button" name="cancel" id="comment-form__cancel-button" value="<__trans phrase="Cancel">" data-url="<mt:EntryPermalink abs2rel="1">#comment-form">
+</mt:If>
+        </div>
+      </div>
+
+    </form>
+  </div>
+</section>
+</mt:ifCommentsAccepted>

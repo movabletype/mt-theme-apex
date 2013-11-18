@@ -1,0 +1,33 @@
+<mt:setvar name="archive" value="search">
+
+<!DOCTYPE html>
+<html lang="<mt:BlogLanguage>" itemscope itemtype="http://schema.org/Blog">
+<head>
+<mt:include module="<__trans phrase="HTML Head">">
+</head>
+<body class="<mt:var name="archive">">
+<div class="container"><div><div class="container-inner">
+
+<mt:Include module="<__trans phrase="Banner Header">">
+
+<div class="content"><div><div class="content-inner">
+
+<main class="main" role="main">
+<mt:include widget="<__trans phrase="Search">">
+<div class="articles">
+</div>
+</main>
+
+</div></div></div>
+
+<mt:Include module="<__trans phrase="Bottom Widgets">">
+<mt:Include module="<__trans phrase="Banner Footer">">
+
+</div></div></div>
+
+<mt:Include module="<__trans phrase="Body Footer">">
+
+<mt:Include module="<__trans phrase="Pagination">">
+
+</body>
+</html>

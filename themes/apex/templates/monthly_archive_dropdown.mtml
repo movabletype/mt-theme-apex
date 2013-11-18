@@ -1,0 +1,26 @@
+<mt:IfArchiveTypeEnabled archive_type="Monthly">
+<nav class="widget-archive-dropdown widget">
+  <header>
+    <h1 class="widget__title"><__trans phrase="Archives"></h1>
+  </header>
+  <div class="widget-content">
+    <select class="widget-select-list">
+<mt:ArchiveList archive_type="Monthly">
+<mt:ArchiveListHeader>
+      <option class="widget-select-list__item">
+        <__trans phrase="Select a Month...">
+      </option>
+</mt:ArchiveListHeader>
+      <option class="widget-select-list__item" value="<mt:ArchiveLink encode_html="1">">
+        <mt:ArchiveTitle>
+      </option>
+</mt:ArchiveList>
+    </select>
+  </div>
+  <script type="text/javascript">
+    $('.widget-select-list').on('change',function(){
+      location.href = this.value;
+    });
+  </script>
+</nav>
+</mt:IfArchiveTypeEnabled>

@@ -1,0 +1,16 @@
+<mt:unless name="archive" like="(individual|page)"><mt:if tag="BlogCommentCount">
+<section class="widget-recent-comments widget">
+  <header>
+    <h1 class="widget__title"><__trans phrase="Recent Comments"></h1>
+  </header>
+  <div class="widget-content">
+    <ul class="widget-list">
+<mt:Comments lastn="5" sort_order="descend">
+      <li class="widget-list__item">
+        <__trans phrase="__VIEW_COMMENT" params="<mt:CommentAuthor>%%<mt:CommentLink>%%<mt:CommentEntry><mt:EntryTitle></mt:CommentEntry>">
+      </li>
+</mt:Comments>
+    </ul>
+  </div>
+</section>
+</mt:if></mt:unless>

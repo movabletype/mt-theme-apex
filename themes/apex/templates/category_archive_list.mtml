@@ -1,0 +1,30 @@
+<mt:ifArchiveTypeEnabled archive_type="Category"><mt:if tag="BlogCategoryCount">
+<nav class="widget-archive-category widget">
+  <header>
+    <h1 class="widget__title"><__trans phrase="Categories"></h1>
+  </header>
+  <div class="widget-content"><mt:topLevelCategories>
+<mt:subCatIsFirst>
+    <ul class="widget-list">
+</mt:subCatIsFirst>
+<mt:if tag="CategoryCount">
+      <li class="widget-list__item">
+        <a href="<mt:CategoryArchiveLink>">
+          <__trans phrase="[_1] ([_2])" params="<mt:categoryLabel>%%<mt:categoryCount>">
+        </a>
+        <mt:subCatsRecurse>
+      </li>
+<mt:else>
+      <li class="widget-list__item">
+        <span>
+      <mt:CategoryLabel>
+      <mt:subCatsRecurse>
+        </span>
+      </li>
+</mt:If>
+<mt:subCatIsLast>
+    </ul>
+</mt:subCatIsLast></mt:TopLevelCategories>
+  </div>
+</nav>
+</mt:if></mt:ifArchiveTypeEnabled>

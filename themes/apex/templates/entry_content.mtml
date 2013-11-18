@@ -1,0 +1,93 @@
+<article id="entry-<mt:entryID>" class="hentry h-entry"  itemprop="blogPost" itemscope itemType="http://schema.org/BlogPosting">
+<header class="article-header">
+  <h1 class="article__title entry-title p-name" itemprop="name">
+<mt:if name="archive" eq="individual">
+    <mt:entryTitle>
+<mt:elseIf name="archive" eq="page">
+    <mt:pageTitle>
+<mt:else>
+    <a href="<mt:entryPermalink encode_html="1">"><mt:entryTitle></a>
+</mt:if>
+  </h1>
+<mt:unless name="archive" eq="page">
+  <ul class="article-meta-list">
+    <li class="article__date-published">
+      <span class="icon-calendar"></span>
+      <time datetime="<mt:entryDate format_name="iso8601">" itemprop="datePublished" class="updated dt-published">
+        <mt:EntryDate format="%x">
+      </time>
+    </li>
+<mt:ifArchiveTypeEnabled archive_type="Category"><mt:if tag="EntryPrimaryCategory">
+    <li class="article__primary-category"><mt:entryPrimaryCategory>
+      <a itemprop="articleSection" rel="tag" class="p-category" href="<mt:categoryArchiveLink>">
+        <mt:CategoryLabel>
+      </a></mt:EntryPrimaryCategory>
+    </li>
+</mt:if></mt:ifArchiveTypeEnabled>
+  </ul>
+</mt:unless>
+</header>
+<div class="article-content-container">
+<mt:if name="archive" eq="individual">
+<div class="article__content entry-content e-content" itemprop="articleBody"><div>
+<mt:EntryBody>
+<mt:EntryMore>
+</div></div>
+
+<mt:if tag="EntryTags">
+<aside class="article-tags">
+<header class="article-tags-header"><h1 class="article-tags__title"><span><__trans phrase="Tags"></span></h1></header>
+<ul class="article-tags-list">
+<mt:entryTags>
+  <li class="article-tags__item">
+    <a href="<$mt:Link template="tags" encode_html="1"$>#<mt:tagName encode_html="1">" class="tags-link">
+      <span itemprop="keywords"><mt:tagName></span>
+    </a>
+  </li>
+</mt:entryTags>
+</ul>
+</aside>
+</mt:if>
+
+<nav class="article-navigation">
+  <ul><mt:EntryPrevious>
+    <li class="article-navigation__prev">
+      <a rel="prev" href="<mt:entryPermalink encode_html="1">" title="<mt:EntryTitle encode_html="1">">
+        <span class="icon-arrow-left"></span>
+        <__trans phrase="Previous entry">
+      </a>
+    </li>
+</mt:EntryPrevious><mt:EntryNext>
+    <li class="article-navigation__next">
+      <a rel="next" href="<mt:entryPermalink encode_html="1">" title="<mt:EntryTitle encode_html="1">">
+        <__trans phrase="Next entry">
+        <span class="icon-arrow-right"></span>
+      </a>
+    </li></mt:EntryNext>
+  </ul>
+</nav>
+
+<mt:elseIf name="archive" eq="page">
+<div class="article__content entry-content e-content" itemprop="articleBody"><div>
+<mt:PageBody>
+<mt:PageMore>
+</div></div>
+
+<mt:else>
+<div class="article__excerpt entry-summary p-summary" itemprop="description"><div>
+<mt:EntryExcerpt>
+</div></div>
+<div class="article__url">
+  <a href="<mt:entryPermalink encode_html="1">" itemprop="url" rel="bookmark" class="u-url">
+    <__trans phrase="Continue reading">
+  </a>
+</div>
+</mt:if>
+
+<mt:if name="archive" like="(individual|page)">
+<mt:Include module="<__trans phrase="Comments">">
+<mt:Include module="<__trans phrase="Trackbacks">">
+</mt:if>
+
+</div>
+</article>
