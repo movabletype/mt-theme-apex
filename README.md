@@ -1,6 +1,8 @@
 # Apex
 APEX is minimalist themes based on the responsive design.
 
+![Capture Image](https://raw.github.com/movabletype/mt-theme-apex/master/capture_themes.png)
+
 ## Requirements
 This theme requires:
 
