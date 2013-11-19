@@ -187,6 +187,7 @@ a:hover {
   margin: 1.5em 0;
   font-size: 0.9375em;
   line-height: 1.7;
+  *zoom: 1;
 }
 .hentry .article__content h2,
 .hentry .article__excerpt h2 {
@@ -226,6 +227,12 @@ a:hover {
 .hentry .article__excerpt li {
   margin: 0.5em 0;
   line-height: 1.7;
+}
+.hentry .article__content:after,
+.hentry .article__excerpt:after {
+  content: "";
+  display: table;
+  clear: both;
 }
 
 .individual .hentry,
