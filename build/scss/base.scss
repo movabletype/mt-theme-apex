@@ -34,6 +34,8 @@ body {
 
 a {
   color: #0E51A7;
+  &:active,
+  &:focus,
   &:hover {
     color: #C90707;
   }
@@ -121,7 +123,7 @@ a {
     .icon-home {
       font-size: 18px;
       display: inline-block;
-      vertical-align: bottom;
+      vertical-align: middle;
       line-height: 25px;
       color: #333;
       margin-right: 0.2em;
@@ -130,6 +132,11 @@ a {
       display: block;
       padding: 0 0.2em;
       font-size: 0.9375em;
+      &:hover .icon-home,
+      &:active .icon-home,
+      &:focus .icon-home {
+        color: #C90707;
+      }
     }
   }
 }
@@ -159,6 +166,11 @@ a {
       a {
         color: #000;
         text-decoration: none;
+        &:hover,
+        &:active,
+        &:focus {
+          color: #C90707;
+        }
       }
     }
     .article-meta-list {
@@ -278,6 +290,7 @@ a {
       border-radius: 4px;
       cursor: pointer;
       &:hover,
+      &:focus,
       &:active {
         color: #fff;
         background-color: #C90707;
@@ -325,6 +338,7 @@ a {
   a {
     color: #000;
     &:hover,
+    &:focus,
     &:active {
       color: #C90707;
     }
@@ -386,13 +400,15 @@ a {
     padding: 0.3em 0;
     @include border-radius(4px);
     &:hover,
-    &:focus {
+    &:focus,
+    &:active {
       background-color: #C90707;
     }
     &.button-disabled {
       background-color: #ccc;
       &:hover,
-      &:focus {
+      &:focus,
+      &:active {
         background-color: #ccc;
       }
     }
@@ -451,9 +467,10 @@ a {
     a {
       background: #f6f6f6;
       &:hover,
+      &:focus,
       &:active {
-        color: inherit;
-        background: #ffa640;
+        color: #fff;
+        background: #C90707;
       }
     }
   }
@@ -498,6 +515,7 @@ a {
       font-size: 24px;
     }
     &:hover,
+    &:focus,
     &:active {
       color: #C90707;
       .icon-feed {
@@ -639,7 +657,9 @@ a {
     }
     a {
       color: #000;
-      &:hover {
+      &:hover,
+      &:focus,
+      &:active {
         color: #C90707;
       }
     }
@@ -658,6 +678,8 @@ a {
       line-height: 1.5;
       padding: 0.5em 1em;
       @include border-radius(4px);
+      &:active,
+      &:focus,
       &:hover {
         color: #fff;
         background-color: #C90707;
@@ -742,6 +764,7 @@ a {
       background-color: #0E51A7;
     }
     &:hover,
+    &:active,
     &:focus {
       background-color: #C90707;
     }

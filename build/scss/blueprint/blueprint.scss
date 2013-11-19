@@ -17,7 +17,9 @@ body {
 
 a {
   color: #fff;
-  &:hover {
+  &:hover,
+  &:focus,
+  &:active {
     color: #F384C3;
   }
 }
@@ -36,7 +38,9 @@ a {
 .header-nav-list {
   li {
     &.header-nav__home {
-      a:hover .icon-home {
+      a:active .icon-home,
+      a:hover .icon-home,
+      a:focus .icon-home {
         color: #F384C3;
       }
     }
@@ -54,6 +58,11 @@ a {
     h1.article__title {
       a {
         color: #ffffff;
+        &:hover,
+        &:active,
+        &:focus {
+          color: #F384C3;
+        }
       }
     }
     .article-meta-list {
@@ -86,14 +95,18 @@ a {
     }
     a {
       color: #fff;
-      &:hover {
+      &:hover,
+      &:active,
+      &:focus {
         color: #F384C3;
       }
     }
     .comment__reply-link {
       color: #ffffff;
       background-color: #5fbadf;
-      &:hover {
+      &:hover,
+      &:active,
+      &:focus {
         background-color: #F384C3;
       }
     }
@@ -178,6 +191,7 @@ a {
       background: #5fbadf;
       color: #fff;
       &:hover,
+      &:focus,
       &:active {
         background: #F384C3;
       }
@@ -200,6 +214,7 @@ a {
   a {
     color: #ffffff;
     &:hover,
+    &:focus,
     &:active {
       color: #F384C3;
     }
@@ -221,12 +236,14 @@ a {
     color: #333;
     background-color: #fff;
     &:hover,
-    &:focus {
+    &:focus,
+    &:active {
       background-color: #F384C3;
     }
     &.button-disabled {
       background-color: #5fbadf;
       &:hover,
+      &:active,
       &:focus {
         background-color: #5fbadf;
       }
@@ -252,6 +269,7 @@ a {
       color: #fff;
     }
     &:hover,
+    &:focus,
     &:active {
       color: #F384C3;
       .icon-feed {
@@ -269,6 +287,7 @@ a {
     a {
       background: #5BB9E1;
       &:hover,
+      &:focus,
       &:active {
         color: inherit;
         background: #F384C3;

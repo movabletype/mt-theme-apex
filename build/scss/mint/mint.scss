@@ -17,6 +17,8 @@ body {
 
 a {
   color: #00ccff;
+  &:active,
+  &:focus,
   &:hover {
     color: #FF0090;
   }
@@ -36,6 +38,8 @@ a {
 .header-nav-list {
   li {
     &.header-nav__home {
+      a:active .icon-home,
+      a:focus .icon-home,
       a:hover .icon-home {
         color: #FF0090;
       }
@@ -54,6 +58,11 @@ a {
     h1.article__title {
       a {
         color: #F2F2FF;
+        &:active,
+        &:focus,
+        &:hover {
+          color: #FF0090;
+        }
       }
     }
     .article-meta-list {
@@ -85,14 +94,18 @@ a {
     }
     a {
       color: #F2F2FF;
-      &:hover {
+      &:hover,
+      &:active,
+      &:focus {
         color: #FF0090;
       }
     }
     .comment__reply-link {
       color: #f2f2ff;
       background-color: #6E6E7D;
-      &:hover {
+      &:hover,
+      &:active,
+      &:focus {
         background-color: #FF0090;
       }
     }
@@ -176,6 +189,7 @@ a {
       background: #6E6E7D;
       color: #fff;
       &:hover,
+      &:focus,
       &:active {
         background: #ff0090;
       }
@@ -198,6 +212,7 @@ a {
   a {
     color: #F2F2FF;
     &:hover,
+    &:focus,
     &:active {
       color: #FF0090;
     }
@@ -218,12 +233,14 @@ a {
   .widget-search__button {
     background-color: #30A4BF;
     &:hover,
+    &:active,
     &:focus {
       background-color: #FF0090;
     }
     &.button-disabled {
       background-color: #6E6E7D;
       &:hover,
+      &:active,
       &:focus {
         background-color: #6E6E7D;
       }
@@ -249,6 +266,7 @@ a {
       color: #30A4BF;
     }
     &:hover,
+    &:focus,
     &:active {
       color: #ff0090;
       .icon-feed {
@@ -266,6 +284,7 @@ a {
     a {
       background: #565662;
       &:hover,
+      &:focus,
       &:active {
         color: inherit;
         background: #FF0090;
@@ -280,6 +299,7 @@ a {
   .rank-3 a {
     color: #00ccff;
     &:hover,
+    &:focus,
     &:active {
       color: #FF0090;
     }

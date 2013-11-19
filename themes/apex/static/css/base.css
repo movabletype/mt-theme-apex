@@ -29,7 +29,7 @@ body {
 a {
   color: #0E51A7;
 }
-a:hover {
+a:active, a:focus, a:hover {
   color: #C90707;
 }
 
@@ -123,7 +123,7 @@ a:hover {
 .header-nav-list li .icon-home {
   font-size: 18px;
   display: inline-block;
-  vertical-align: bottom;
+  vertical-align: middle;
   line-height: 25px;
   color: #333;
   margin-right: 0.2em;
@@ -132,6 +132,9 @@ a:hover {
   display: block;
   padding: 0 0.2em;
   font-size: 0.9375em;
+}
+.header-nav-list li a:hover .icon-home, .header-nav-list li a:active .icon-home, .header-nav-list li a:focus .icon-home {
+  color: #C90707;
 }
 
 /*
@@ -162,6 +165,9 @@ a:hover {
 .hentry .article-header h1.article__title a {
   color: #000;
   text-decoration: none;
+}
+.hentry .article-header h1.article__title a:hover, .hentry .article-header h1.article__title a:active, .hentry .article-header h1.article__title a:focus {
+  color: #C90707;
 }
 .hentry .article-header .article-meta-list {
   list-style: none;
@@ -293,7 +299,7 @@ a:hover {
   border-radius: 4px;
   cursor: pointer;
 }
-.article-navigation li a:hover, .article-navigation li a:active {
+.article-navigation li a:hover, .article-navigation li a:focus, .article-navigation li a:active {
   color: #fff;
   background-color: #C90707;
 }
@@ -336,7 +342,7 @@ a:hover {
 .widget a {
   color: #000;
 }
-.widget a:hover, .widget a:active {
+.widget a:hover, .widget a:focus, .widget a:active {
   color: #C90707;
 }
 
@@ -397,13 +403,13 @@ a:hover {
   -o-border-radius: 4px;
   border-radius: 4px;
 }
-.widget-search .widget-search__button:hover, .widget-search .widget-search__button:focus {
+.widget-search .widget-search__button:hover, .widget-search .widget-search__button:focus, .widget-search .widget-search__button:active {
   background-color: #C90707;
 }
 .widget-search .widget-search__button.button-disabled {
   background-color: #ccc;
 }
-.widget-search .widget-search__button.button-disabled:hover, .widget-search .widget-search__button.button-disabled:focus {
+.widget-search .widget-search__button.button-disabled:hover, .widget-search .widget-search__button.button-disabled:focus, .widget-search .widget-search__button.button-disabled:active {
   background-color: #ccc;
 }
 
@@ -467,15 +473,18 @@ a:hover {
 .widget-archive-monthly .widget-list__item a {
   background: #f6f6f6;
 }
-.widget-archive-category .widget-list__item a:hover, .widget-archive-category .widget-list__item a:active,
+.widget-archive-category .widget-list__item a:hover, .widget-archive-category .widget-list__item a:focus, .widget-archive-category .widget-list__item a:active,
 .widget-recent-entries .widget-list__item a:hover,
+.widget-recent-entries .widget-list__item a:focus,
 .widget-recent-entries .widget-list__item a:active,
 .widget-pages .widget-list__item a:hover,
+.widget-pages .widget-list__item a:focus,
 .widget-pages .widget-list__item a:active,
 .widget-archive-monthly .widget-list__item a:hover,
+.widget-archive-monthly .widget-list__item a:focus,
 .widget-archive-monthly .widget-list__item a:active {
-  color: inherit;
-  background: #ffa640;
+  color: #fff;
+  background: #C90707;
 }
 
 .widget-list__item .widget-list__item {
@@ -516,10 +525,10 @@ a:hover {
   vertical-align: middle;
   font-size: 24px;
 }
-.widget-syndication a:hover, .widget-syndication a:active {
+.widget-syndication a:hover, .widget-syndication a:focus, .widget-syndication a:active {
   color: #C90707;
 }
-.widget-syndication a:hover .icon-feed, .widget-syndication a:active .icon-feed {
+.widget-syndication a:hover .icon-feed, .widget-syndication a:focus .icon-feed, .widget-syndication a:active .icon-feed {
   color: #C90707;
 }
 
@@ -657,7 +666,7 @@ a:hover {
 .comments-content li a {
   color: #000;
 }
-.comments-content li a:hover {
+.comments-content li a:hover, .comments-content li a:focus, .comments-content li a:active {
   color: #C90707;
 }
 .comments-content li .comment-reply-link-container {
@@ -678,7 +687,7 @@ a:hover {
   -o-border-radius: 4px;
   border-radius: 4px;
 }
-.comments-content li .comment__reply-link:hover {
+.comments-content li .comment__reply-link:active, .comments-content li .comment__reply-link:focus, .comments-content li .comment__reply-link:hover {
   color: #fff;
   background-color: #C90707;
 }
@@ -767,8 +776,9 @@ a:hover {
 .comment-form-container input[type="button"][name="post"] {
   background-color: #0E51A7;
 }
-.comment-form-container input[type="submit"]:hover, .comment-form-container input[type="submit"]:focus,
+.comment-form-container input[type="submit"]:hover, .comment-form-container input[type="submit"]:active, .comment-form-container input[type="submit"]:focus,
 .comment-form-container input[type="button"]:hover,
+.comment-form-container input[type="button"]:active,
 .comment-form-container input[type="button"]:focus {
   background-color: #C90707;
 }

@@ -2,8 +2,8 @@
 	font-family: 'apex';
 	src:url('fonts/apex.eot');
 	src:url('fonts/apex.eot?#iefix') format('embedded-opentype'),
+    url('fonts/apex.woff') format('woff'),
 		url('fonts/apex.ttf') format('truetype'),
-		url('fonts/apex.woff') format('woff'),
 		url('fonts/apex.svg#apex') format('svg');
 	font-weight: normal;
 	font-style: normal;
@@ -24,41 +24,41 @@
 }
 
 .icon-feed:before {
-	content: "\e4a1";
+	content: "\66";
 }
 .icon-home:before {
-	content: "\e002";
+	content: "\68";
 }
 .icon-bubbles:before {
-	content: "\e155";
+	content: "\62";
 }
 .icon-quill:before {
-	content: "\e015";
+	content: "\71";
 }
 .icon-forward:before {
-	content: "\e14d";
+	content: "\77";
 }
 .icon-key:before {
-	content: "\e1ce";
+	content: "\6b";
 }
 .icon-airplane:before {
-	content: "\e25b";
+	content: "\61";
 }
 .icon-eye:before {
-	content: "\e2d9";
+	content: "\65";
 }
 .icon-close:before {
-	content: "\e36d";
+	content: "\78";
 }
 .icon-arrow-right:before {
-	content: "\e3b1";
+	content: "\72";
 }
 .icon-arrow-left:before {
-	content: "\e3b3";
+	content: "\6c";
 }
 .icon-calendar:before {
-	content: "\e115";
+	content: "\63";
 }
 .icon-arrow-down:before {
-	content: "\e3b2";
+	content: "\64";
 }
