@@ -1,5 +1,5 @@
 # Apex
-APEX is minimalist themes based on the responsive design.
+Apex is minimalist themes based on the responsive design.
 
 ![Capture Image](https://raw.github.com/movabletype/mt-theme-apex/master/capture_themes.png)
 
@@ -19,7 +19,7 @@ This theme requires:
 4. Create a site with "Apex" theme.
 
 ## For Developer
-If you want to create your own apex theme, you can use scss files with grunt task (required sass and compass capavilities in local computer)
+If you want to create your own Apex theme, you can use scss files with grunt task (required sass and compass capavilities in local computer)
 
 ```
 cd build/ && npm install && grunt build
