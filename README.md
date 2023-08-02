@@ -6,9 +6,9 @@ Apex is minimalist themes based on the responsive design.
 ## Requirements
 This theme requires:
 
-* Movable Type 6 or higher
+* Movable Type 6
 
-##Key Features
+## Key Features
 * Minimalist Styling
 * Incremental pagination with Ajax
 * Responsive Web Design
