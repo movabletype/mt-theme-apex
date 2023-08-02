@@ -37,6 +37,7 @@ elements:
           label: 'Styles for Apex'
           description_label: 'APEX is minimalist themes based on the responsive design.'
           order: 2
+          class: Local
       templates:
         index:
           main_index:
